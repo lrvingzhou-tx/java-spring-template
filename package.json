@@ -1,0 +1,177 @@
+{
+  "name": "@asyncapi/java-spring-template",
+  "version": "0.28.0",
+  "description": "Java Spring template for AsyncAPI generator.",
+  "keywords": [
+    "asyncapi",
+    "generator",
+    "java",
+    "spring",
+    "template"
+  ],
+  "author": "Fran Mendez <fmvilas@gmail.com> (fmvilas.com)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncapi/java-spring-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/asyncapi/java-spring-template/issues"
+  },
+  "homepage": "https://github.com/asyncapi/java-spring-template#readme",
+  "scripts": {
+    "test": "rimraf test/temp && jest --modulePathIgnorePatterns='./template'",
+    "lint": "echo \"No linter specified yet\"",
+    "release": "semantic-release",
+    "generate:assets": "echo 'No additional assets need to be generated at the moment'",
+    "bump:version": "npm --no-git-tag-version --allow-same-version version $VERSION"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@asyncapi/generator-filters": "^2.1.0",
+    "@asyncapi/generator-hooks": "^0.1.0",
+    "fs-extra": "^9.0.0",
+    "lodash": "^4.17.21",
+    "replace-in-file": "^6.1.0",
+    "tmp": "^0.2.1"
+  },
+  "devDependencies": {
+    "@asyncapi/generator": "^1.9.6",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/github": "^7.0.4",
+    "@semantic-release/npm": "^7.0.3",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "jest": "^27.3.1",
+    "node-fetch": "^2.6.1",
+    "rimraf": "^2.2.8",
+    "semantic-release": "^19.0.3"
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
+  "generator": {
+    "supportedProtocols": [
+      "kafka",
+      "amqp",
+      "mqtt"
+    ],
+    "nonRenderableFiles": [
+      "**/*.jar"
+    ],
+    "parameters": {
+      "inverseOperations": {
+        "description": "Generate application that will publish messages to `publish` operation of channels and read messages from `subscribe` operation of channels. Literally this flag just swap `publish` and `subscribe` operations in channels.",
+        "default": false,
+        "required": false
+      },
+      "disableEqualsHashCode": {
+        "description": "Disable generation of equals and hashCode methods for model classes.",
+        "default": "false",
+        "required": false
+      },
+      "listenerPollTimeout": {
+        "description": "Only for Kafka. Timeout to use when polling the consumer.",
+        "default": 3000,
+        "required": false
+      },
+      "listenerConcurrency": {
+        "description": "Only for Kafka. Number of threads to run in the listener containers.",
+        "default": 3,
+        "required": false
+      },
+      "connectionTimeout": {
+        "description": "Only for MQTT. This value, measured in seconds, defines the maximum time interval the client will wait for the network connection to the MQTT server to be established. The default timeout is 30 seconds. A value of 0 disables timeout processing meaning the client will wait until the network connection is made successfully or fails.",
+        "default": 30,
+        "required": false
+      },
+      "disconnectionTimeout": {
+        "description": "Only for MQTT. The completion timeout in milliseconds when disconnecting. The default disconnect completion timeout is 5000 milliseconds.",
+        "default": 5000,
+        "required": false
+      },
+      "completionTimeout": {
+        "description": "Only for MQTT. The completion timeout in milliseconds for operations. The default completion timeout is 30000 milliseconds.",
+        "default": 30000,
+        "required": false
+      },
+      "asyncapiFileDir": {
+        "description": "Parameter of @asyncapi/generator-hooks#createAsyncapiFile, allows to specify where original AsyncAPI file will be stored.",
+        "default": "src/main/resources/api/",
+        "required": false
+      },
+      "javaPackage": {
+        "description": "The Java package of the generated classes. Alternatively you can set the specification extension info.x-java-package",
+        "default": "com.asyncapi",
+        "required": false
+      },
+      "addTypeInfoHeader": {
+        "description": "Only for Kafka. Add type information to the message header",
+        "default": "true",
+        "required": false
+      },
+      "serverUrl": {
+        "description": "mq proxy demo server",
+        "default": "http://127.0.0.1:8080/message.do",
+        "required": false
+      },
+      "appPrivateKey": {
+        "description": "app private key",
+        "default": "Ow==",
+        "required": false
+      },
+      "alipayPublicKey": {
+        "description": "alipay public key",
+        "default": "AB",
+        "required": false
+      },
+      "appId": {
+        "description": "app id",
+        "default": "",
+        "required": false
+      },
+      "format": {
+        "description": "format",
+        "default": "json",
+        "required": false
+      },
+      "charset": {
+        "description": "charset",
+        "default": "UTF-8",
+        "required": false
+      },
+      "signType": {
+        "description": "sign type",
+        "default": "RSA2",
+        "required": false
+      }
+    },
+    "generator": ">=1.8.27 <2.0.0",
+    "filters": [
+      "@asyncapi/generator-filters"
+    ],
+    "hooks": {
+      "@asyncapi/generator-hooks": "createAsyncapiFile"
+    }
+  }
+}
